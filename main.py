@@ -54,7 +54,7 @@ def on_message(client, userdata, message):
 
 if __name__ == '__main__':
     # Initialise LED strip
-    lp = LEDparams(active=False, pattern="block", colour=(222, 142, 31), speed=60, width=50, fade=0)
+    lp = LEDparams(active=False, pattern="block", colour=(222, 142, 31), speed=60, width=75, fade=0)
     strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
     strip.begin()
 

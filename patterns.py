@@ -59,7 +59,6 @@ def rainbow_cycle(strip, lp, iterations=1):
             for i in range(strip.numPixels()):
                 colour = wheel((int(i * 256 / strip.numPixels() * lp.width) + j) & 255)
                 strip.setPixelColor(i, colour)
-                strip.setBrightness(255)
             j += 1
         # Fade
         if lp.active:  # Fade on
@@ -69,10 +68,11 @@ def rainbow_cycle(strip, lp, iterations=1):
         elif not lp.active:  # Fade off
             for i in range(strip.numPixels()):
                 strip.setBrightness(int(lp.fade))
-            lp.fade = min(lp.fade - 2, 255)
+            lp.fade = lp.fade - 2
             if lp.fade <= 0:  # Set to black
                 for i in range(strip.numPixels()):
                     strip.setPixelColor(i, Color(0, 0, 0))
+                    strip.setBrightness(255)
                 strip.show()
                 break
         if lp.pattern != "rainbow":
