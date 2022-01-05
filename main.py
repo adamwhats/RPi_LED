@@ -30,11 +30,17 @@ class LEDparams:
     colour: tuple
     speed: int
     width: int
+    fade: float
 
 
 def on_message(client, userdata, message):
+    # Update light params
     if message.topic == topics["active"]:
         lp.active = bool(int(message.payload.decode("utf-8")))
+        if lp.active:
+            lp.fade = 0
+        else:
+            lp.fade = 255
     elif message.topic == topics["pattern"]:
         lp.pattern = str(message.payload.decode("utf-8"))
     elif message.topic == topics["colour"]:
@@ -48,7 +54,7 @@ def on_message(client, userdata, message):
 
 if __name__ == '__main__':
     # Initialise LED strip
-    lp = LEDparams(active=False, pattern="block", colour=(222, 142, 31), speed=60, width=50)
+    lp = LEDparams(active=False, pattern="block", colour=(222, 142, 31), speed=60, width=75, fade=0)
     strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
     strip.begin()
 
